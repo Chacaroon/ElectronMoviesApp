@@ -1,0 +1,10 @@
+$prev-bg-color: rgb(199, 199, 199);
+
+.prev {
+  background-color: $prev-bg-color;
+  width: 30%; height: 170px;
+
+  &.addMovieBtn:hover {
+    background-color: #e6e6e6;
+  }
+}

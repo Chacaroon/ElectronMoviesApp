@@ -4,7 +4,10 @@ const Schema = mongoose.Schema
 const movieSchema = new Schema({
     title: String,
     description: String,
-    rating: Number
+    rating: {
+        type: Number,
+        isRequired: false
+    }
 })
 
-export default mongoose.model('Movie', movieSchema)
+module.exports = mongoose.connection.model('Movie', movieSchema)

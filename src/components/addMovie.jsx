@@ -1,41 +1,39 @@
 /*eslint-disable*/
 import React, {Component} from "react";
-import $ from "jquery";
 /*eslint-enable*/
 
-export default class addMovie extends Component {
+export default class AddMovie extends Component {
 
-    onSubmit(e) {
-        const t = e.target
-        let lol = {}
+    inputsHandle(event) {
+        const {name, value} = event.target
 
-        for (let i = 0; i < 2; i++) {
-            lol[t[i].name] = t[i].value
-        }
-
-        $.ajax('http://localhost:3000/foo', {
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            }
+        this.setState({
+            [name]: value
         })
-            .done((out) => {
-                console.log('dsflsd', out) //eslint-disable-line
-            })
-            .fail((err) => {
-                console.log(err) //eslint-disable-line
-            })
+    }
 
+    submitForm(e) {
+        const {title, description, rating, genre, year} = this.state
+        this.props.addMovie(title, description, +rating, genre, +year) // typeof rating === 'string'
         e.preventDefault()
     }
 
     render() {
-        return <form onSubmit={::this.onSubmit}>
-            <input type="text" name="title"/>
-            <input type="text" name="body"/>
-            <button type="submit">
-                test
-            </button>
-        </form>
+        return <div>
+            <form onSubmit={::this.submitForm}>
+                <input type="text" name="title" onChange={::this.inputsHandle} required/>
+                <br/>
+                <input type="text" name="description" onChange={::this.inputsHandle} required/>
+                <br/>
+                <input type="number" name="rating" max="10" min="1" onChange={::this.inputsHandle} required/>
+                <br/>
+                <input type="text" name="genre" onChange={::this.inputsHandle} required/>
+                <br/>
+                <input type="number" name="year" onChange={::this.inputsHandle} required/>
+                <button type="submit">
+                    test
+                </button>
+            </form>
+        </div>
     }
 }

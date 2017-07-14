@@ -2,14 +2,14 @@ const webpack = require('webpack')
 const path    = require('path')
 
 module.exports = {
-    entry: {
-        bundle: path.resolve('src', 'index.js')
-    },
-
+    entry: [
+        'webpack-hot-middleware/client',
+        './src/index'
+    ],
     output: {
         path: path.join(__dirname, 'dist'),
-        publicPath: '/static/',
-        filename: '[name].js'
+        filename: 'bundle.js',
+        publicPath: '/static/'
     },
 
     module: {
@@ -21,11 +21,20 @@ module.exports = {
                     'eslint-loader'
                 ],
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
     ],
 
