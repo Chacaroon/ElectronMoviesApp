@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 export default class moviePrev extends Component { //parent Body
     render() {
 
-        const {title, rating, year} = this.props
+        const {title, rating, year} = this.props.info
 
         return <div className="prev">
             <p>{title}</p>
@@ -14,8 +14,13 @@ export default class moviePrev extends Component { //parent Body
     }
 
     static propTypes = {
-        title: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        year: PropTypes.number.isRequired
+        info: PropTypes.shape({
+            title: PropTypes.string.isRequired
+            , description: PropTypes.string.isRequired
+            , rating: PropTypes.number.isRequired
+            , genre: PropTypes.string.isRequired
+            , year: PropTypes.number.isRequired
+            , date: PropTypes.string.isRequired
+        })
     }
 }

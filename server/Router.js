@@ -18,7 +18,7 @@ app.post('/addMovie', (req, res) => {
     db.collection('movies').save(movie, (err) => {
         err
             ? res.send({isSuccess: false, err: err})
-            : res.send({isSuccess: true})
+            : res.send({isSuccess: true, film: movie})
     })
 })
 

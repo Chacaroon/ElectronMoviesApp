@@ -7,7 +7,7 @@ import AddMovieBtn from '../components/addMovieBtn.jsx' //eslint-disable-line
 export default class Body extends Component {
 
     componentWillMount() {
-        
+        this.props.findFilms()
     }
 
     render() {
@@ -15,9 +15,7 @@ export default class Body extends Component {
         const content = this.props.filmsList.map((item, index) => {
             return <MoviePrev
                 key={index}
-                title={item.title}
-                rating={item.rating}
-                year={item.year}
+                info={{...item}}
             />
         })
 

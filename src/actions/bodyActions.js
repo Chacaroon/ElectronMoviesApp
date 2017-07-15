@@ -16,14 +16,6 @@ export function addMovie(title, description, rating, genre, year) {
             type: ADD_MOVIE_REQUEST
         })
 
-        const sendData = {
-            title: title,
-            description: description,
-            rating: rating,
-            genre: genre,
-            year: year
-        }
-
         const fail = () => {
             dispatch({
                 type: ADD_MOVIE_FAILED,
@@ -34,13 +26,19 @@ export function addMovie(title, description, rating, genre, year) {
 
         $.ajax('/addMovie', {
             method: 'POST',
-            data: sendData
+            data: {
+                title: title,
+                description: description,
+                rating: rating,
+                genre: genre,
+                year: year
+            }
         })
             .done((data) => {
                 data.isSuccess
                     ? dispatch({
                         type: ADD_MOVIE_SUCCESS,
-                        payload: sendData
+                        payload: data.film
                     })
                     : fail()
             })
@@ -48,7 +46,7 @@ export function addMovie(title, description, rating, genre, year) {
     }
 }
 
-export function getMovies(request) {
+export function findFilms(request) {
 
     return (dispatch) => {
         dispatch({

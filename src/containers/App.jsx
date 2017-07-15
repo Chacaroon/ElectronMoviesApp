@@ -10,7 +10,7 @@ import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
 
 class App extends Component {
     render() {
-        const {filmsList} = this.props.body
+        const {filmsList, fetching, err} = this.props.body
         const {addMovie, findFilms}  = this.props.bodyActions
         return (
             <Grid>
@@ -19,7 +19,9 @@ class App extends Component {
                         <Body
                             addMovie={addMovie}
                             findFilms={findFilms}
-                            filmsList={filmsList}/>
+                            filmsList={filmsList}
+                            fetching={fetching}
+                            err={err}/>
                     </Col>
 
                     <Col xs={4} sm={4} md={4} lg={4}>
@@ -34,6 +36,9 @@ class App extends Component {
 App.propTypes = {
     body: PropTypes.shape({
         filmsList: PropTypes.array.isRequired
+        , fetching: PropTypes.bool.isRequired
+        , findFilms: PropTypes.func.isRequired
+        , addMovie: PropTypes.func.isRequired
     })
 }
 
