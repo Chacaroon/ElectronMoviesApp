@@ -14,7 +14,7 @@ export default class AddMovie extends Component {
 
     submitForm(e) {
         const {title, description, rating, genre, year} = this.state
-        this.props.addMovie(title, description, +rating, genre, +year) // typeof rating === 'string'
+        this.props.addMovie(title, description, rating, genre, year)
         e.preventDefault()
     }
 
@@ -31,7 +31,7 @@ export default class AddMovie extends Component {
                 <br/>
                 <input type="number" name="year" onChange={::this.inputsHandle} required/>
                 <button type="submit">
-                    test
+                    Отправить
                 </button>
             </form>
         </div>

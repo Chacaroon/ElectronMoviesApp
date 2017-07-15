@@ -3,9 +3,9 @@ import {
     ADD_MOVIE_REQUEST,
     ADD_MOVIE_SUCCESS,
 
-    /*GET_MOVIE_REQUEST,
+    GET_MOVIE_REQUEST,
     GET_MOVIE_SUCCESS,
-    GET_MOVIE_FAILED*/
+    GET_MOVIE_FAILED
 } from '../constants/Body'
 import $ from 'jquery'
 
@@ -48,15 +48,31 @@ export function addMovie(title, description, rating, genre, year) {
     }
 }
 
-/*
-export function getMovies(year, genre, request) {
+export function getMovies(request) {
+
     return (dispatch) => {
         dispatch({
             type: GET_MOVIE_REQUEST
         })
 
-        let request = '/'
+        const fail = () => {
+            dispatch({
+                type: GET_MOVIE_FAILED,
+                err: true,
+                payload: new Error('Не удалось загрузить список фильмов')
+            })
+        }
 
-        $.ajax()
+        $.ajax('/findFilms', {
+            type: 'POST',
+            data: request
+        })
+            .done((films) => {
+                dispatch({
+                    type: GET_MOVIE_SUCCESS,
+                    payload: films
+                })
+            })
+            .fail(fail)
     }
-}*/
+}

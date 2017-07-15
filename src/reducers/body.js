@@ -4,10 +4,10 @@ import {
     ADD_MOVIE_FAILED
 } from '../constants/Body'
 
-const initialState = {
-    movieList: [],
+let initialState = {
+    filmsList: [],
     fetching: false,
-    err: ''
+    err: false
 }
 
 export default function stateBody(state = initialState, action) {
@@ -17,9 +17,9 @@ export default function stateBody(state = initialState, action) {
             return {...state, fetching: true}
         }
         case ADD_MOVIE_SUCCESS: {
-            const {movieList} = state
-            movieList.push(action.payload)
-            return {...state, movieList: movieList, fetching: false}
+            const {filmsList} = state
+            filmsList.push(action.payload)
+            return {...state, filmsList: filmsList, fetching: false}
         }
 
         case ADD_MOVIE_FAILED: {

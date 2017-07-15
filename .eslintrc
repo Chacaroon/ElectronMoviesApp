@@ -36,6 +36,7 @@
     "semi": [
       "error",
       "never"
-    ]
+    ],
+    "no-console": "off"
   }
 }

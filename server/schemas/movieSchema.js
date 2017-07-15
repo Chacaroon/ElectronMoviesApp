@@ -7,6 +7,12 @@ const movieSchema = new Schema({
     rating: {
         type: Number,
         isRequired: false
+    },
+    genre: String,
+    year: Number,
+    added: {
+        type: Date,
+        default: Date.now()
     }
 })
 

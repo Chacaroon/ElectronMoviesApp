@@ -6,14 +6,18 @@ import AddMovieBtn from '../components/addMovieBtn.jsx' //eslint-disable-line
 
 export default class Body extends Component {
 
+    componentWillMount() {
+        
+    }
+
     render() {
 
-        const content = this.props.movieList.map((item, index) => {
+        const content = this.props.filmsList.map((item, index) => {
             return <MoviePrev
                 key={index}
                 title={item.title}
-                description={item.description}
                 rating={item.rating}
+                year={item.year}
             />
         })
 
@@ -28,7 +32,7 @@ export default class Body extends Component {
     }
 
     static propTypes = {
-        movieList: PropTypes.array.isRequired,
+        filmsList: PropTypes.array.isRequired,
         addMovie: PropTypes.func.isRequired,
         fetching: PropTypes.bool.isRequired
     }

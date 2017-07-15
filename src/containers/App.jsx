@@ -10,15 +10,16 @@ import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
 
 class App extends Component {
     render() {
-        const {movieList} = this.props.body
-        const {addMovie}  = this.props.bodyActions
+        const {filmsList} = this.props.body
+        const {addMovie, findFilms}  = this.props.bodyActions
         return (
             <Grid>
                 <Row>
                     <Col xs={8} sm={8} md={8} lg={8}>
                         <Body
                             addMovie={addMovie}
-                            movieList={movieList}/>
+                            findFilms={findFilms}
+                            filmsList={filmsList}/>
                     </Col>
 
                     <Col xs={4} sm={4} md={4} lg={4}>
@@ -32,15 +33,13 @@ class App extends Component {
 
 App.propTypes = {
     body: PropTypes.shape({
-        movieList: PropTypes.array.isRequired
-    }),
-    crits: PropTypes.object.isRequired
+        filmsList: PropTypes.array.isRequired
+    })
 }
 
 function mapStateToProps(state) {
     return {
-        body: state.body,
-        crits: state.crits
+        body: state.body
     }
 }
 

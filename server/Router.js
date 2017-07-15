@@ -1,13 +1,13 @@
 const app   = require('express').Router()
 const db    = require('mongoose').connection
-const Movie = require('./schemas/movieSchema')
+const Movies = require('./schemas/movieSchema')
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 })
 
 app.post('/addMovie', (req, res) => {
-    const movie = new Movie({
+    const movie = new Movies({
         title: req.body.title,
         description: req.body.description,
         rating: +req.body.rating,
@@ -22,22 +22,17 @@ app.post('/addMovie', (req, res) => {
     })
 })
 
-/*app.get(/\/:year(\/:genre(\/:request)?)?\?type=search$/, (req, res) => {
+app.post('/findFilms', (req, res) => {
+    let filmsList = []
+    Movies.find(req.filters, req.sort, (err, films) => {
+        films.map((film) => {
+            filmsList.push(film._doc)
+        })
 
-    const year = +req.params.year || undefined
-    let genre;
-    if (!req.params.genre || req.params.genre === 'any') {
-        genre = undefined
-    } else {
-        genre = req.params.genre
-    }
-    // const request = req.params.request
-
-    db.collection('movies').find({year: year, genre: genre}, (err, data) => {
         err
             ? res.send({isSuccess: false, err: err})
-            : res.send({isSuccess: true, data: data})
+            : res.send({isSuccess: true, filmsList: filmsList})
     })
-})*/
+})
 
 module.exports = app
