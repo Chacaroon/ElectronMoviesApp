@@ -3,8 +3,36 @@ $prev-bg-color: rgb(199, 199, 199);
 .prev {
   background-color: $prev-bg-color;
   width: 30%; height: 170px;
+  display: inline-block;
+  margin: 1%;
+  vertical-align: top;
 
-  &.addMovieBtn:hover {
+  &:hover {
     background-color: #e6e6e6;
+  }
+}
+
+.prev-elem {
+  width: 100%;
+  position: relative;
+
+  .img {
+    width: 40%;
+    height: 300px;
+
+    margin: 0 5% 10px 0;
+
+    vertical-align: top;
+    display: inline-block;
+    background-color: black;
+  }
+
+  .info {
+    display: inline-block;
+    width: 50%;
+  }
+
+  .description {
+    clear: both;
   }
 }

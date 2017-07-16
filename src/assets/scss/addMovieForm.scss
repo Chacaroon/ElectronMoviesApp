@@ -1,0 +1,16 @@
+#addMovieForm {
+  display: block;
+
+  label {
+    width: 100%;
+
+    input {
+      float: right;
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+  }
+}

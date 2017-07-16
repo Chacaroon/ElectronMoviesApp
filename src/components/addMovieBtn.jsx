@@ -1,6 +1,6 @@
 import React, {Component} from 'react' //eslint-disable-line
 import {Modal} from 'react-bootstrap' //eslint-disable-line
-import AddMovie from './addMovie.jsx' //eslint-disable-line
+import AddMovieForm from './addMovieForm.jsx' //eslint-disable-line
 import PropTypes from 'prop-types'
 
 export default class addMovieBtn extends Component { //parent Body
@@ -24,19 +24,22 @@ export default class addMovieBtn extends Component { //parent Body
     }
 
     render() {
-        return <div>
+        return (
             <div
-                className="prev addMovieBtn"
+                className="prev"
                 onClick={::this.showAddModal}>
                 <Modal show={this.state.showModal} onHide={::this.closeAddModal}>
+                    <Modal.Header>
+                        <strong>Добавить фильм</strong>
+                    </Modal.Header>
                     <Modal.Body>
-                        <AddMovie
+                        <AddMovieForm
                             addMovie={::this.props.addMovie}
                         />
                     </Modal.Body>
                 </Modal>
             </div>
-        </div>
+        )
     }
 
     static propTypes = {

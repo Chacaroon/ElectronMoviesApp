@@ -37,8 +37,7 @@ App.propTypes = {
     body: PropTypes.shape({
         filmsList: PropTypes.array.isRequired
         , fetching: PropTypes.bool.isRequired
-        , findFilms: PropTypes.func.isRequired
-        , addMovie: PropTypes.func.isRequired
+        , err: PropTypes.bool.isRequired
     })
 }
 

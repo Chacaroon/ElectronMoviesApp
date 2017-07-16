@@ -12,16 +12,16 @@ export default class Body extends Component {
 
     render() {
 
-        const content = this.props.filmsList.map((item, index) => {
+        const content = this.props.filmsList.map((item) => {
             return <MoviePrev
-                key={index}
+                key={item._id}
                 info={{...item}}
             />
         })
 
         content.push(<AddMovieBtn
             addMovie={this.props.addMovie}
-            key={content.length}
+            key="addMovieBtn"
         />)
 
         return <div id="body">
@@ -32,6 +32,7 @@ export default class Body extends Component {
     static propTypes = {
         filmsList: PropTypes.array.isRequired,
         addMovie: PropTypes.func.isRequired,
-        fetching: PropTypes.bool.isRequired
+        fetching: PropTypes.bool.isRequired,
+        findFilms: PropTypes.func.isRequired
     }
 }

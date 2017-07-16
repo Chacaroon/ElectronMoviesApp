@@ -65,11 +65,14 @@ export function findFilms(request) {
             type: 'POST',
             data: request
         })
-            .done((films) => {
-                dispatch({
-                    type: GET_MOVIE_SUCCESS,
-                    payload: films
-                })
+            .done((data) => {
+
+                data.isSuccess
+                    ? dispatch({
+                        type: GET_MOVIE_SUCCESS,
+                        payload: data.filmsList
+                    })
+                    : fail()
             })
             .fail(fail)
     }

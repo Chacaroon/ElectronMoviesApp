@@ -10,7 +10,7 @@ const movieSchema = new Schema({
     },
     genre: String,
     year: Number,
-    added: {
+    date: {
         type: Date,
         default: Date.now()
     }
