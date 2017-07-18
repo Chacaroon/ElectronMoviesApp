@@ -9,7 +9,7 @@ import {
 } from '../constants/Body'
 import $ from 'jquery'
 
-export function addMovie(title, description, rating, genre, year) {
+export function addMovie(title, description, rating, genre, year, img) {
     return (dispatch) => {
 
         dispatch({
@@ -20,7 +20,7 @@ export function addMovie(title, description, rating, genre, year) {
             dispatch({
                 type: ADD_MOVIE_FAILED,
                 err: true,
-                payload: new Error('Не удалось загрузить фильм')
+                payload: new Error('Не удалось загрузить фильм :\'(')
             })
         }
 
@@ -31,7 +31,8 @@ export function addMovie(title, description, rating, genre, year) {
                 description: description,
                 rating: rating,
                 genre: genre,
-                year: year
+                year: year,
+                img: img
             }
         })
             .done((data) => {
@@ -57,7 +58,7 @@ export function findFilms(request) {
             dispatch({
                 type: GET_MOVIE_FAILED,
                 err: true,
-                payload: new Error('Не удалось загрузить список фильмов')
+                payload: new Error('Не удалось загрузить список фильмов :\'(')
             })
         }
 

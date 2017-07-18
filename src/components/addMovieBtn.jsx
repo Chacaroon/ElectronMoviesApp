@@ -13,8 +13,8 @@ export default class addMovieBtn extends Component { //parent Body
     }
 
     submitForm(e) {
-        const {title, description, rating, genre, year} = this.state
-        this.props.addMovie(title, description, rating, genre, year)
+        const {title, description, rating, genre, year, img} = this.state
+        this.props.addMovie(title, description, rating, genre, year, img)
         this.setState({
             showModal: false
         })
@@ -42,7 +42,7 @@ export default class addMovieBtn extends Component { //parent Body
     render() {
         return (
             <div
-                className="prev"
+                id="add-btn"
                 onClick={::this.showAddModal}>
                 <Modal show={this.state.showModal} onHide={::this.closeAddModal}>
                     <Modal.Header>
@@ -73,6 +73,11 @@ export default class addMovieBtn extends Component { //parent Body
                             <p>
                                 <label>
                                     Год: <input type="number" name="year" min="1970" onChange={::this.inputsHandle} required/>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    Изображенние: <input type="text" name="img" onChange={::this.inputsHandle} />
                                 </label>
                             </p>
                             <button type="submit">

@@ -1,14 +1,27 @@
 $prev-bg-color: rgb(199, 199, 199);
 
 .prev {
-  background-color: $prev-bg-color;
-  width: 30%; height: 170px;
-  display: inline-block;
+  width: 30%;
+
   margin: 1%;
+  padding: 1%;
+
+  display: inline-block;
+  position: relative;
+
+  background-color: $prev-bg-color;
+
   vertical-align: top;
 
   &:hover {
     background-color: #e6e6e6;
+  }
+
+  .img-prev {
+    padding-top: 140%;
+    background: no-repeat center top;
+    background-size: cover;
+    display: block;
   }
 }
 
@@ -18,18 +31,19 @@ $prev-bg-color: rgb(199, 199, 199);
 
   .img {
     width: 40%;
-    height: 300px;
 
-    margin: 0 5% 10px 0;
+    margin: 0 10px 10px 0;
 
-    vertical-align: top;
+    padding-top: 60%;
+    background: no-repeat center top;
+    background-size: cover;
     display: inline-block;
-    background-color: black;
   }
 
   .info {
     display: inline-block;
     width: 50%;
+    vertical-align: top;
   }
 
   .description {

@@ -1,0 +1,29 @@
+$add-btn-height: 30px;
+
+#add-btn {
+  position: absolute;
+  width: 150px;
+  height: $add-btn-height;
+  background-color: red;
+  right: 0;
+  top: 5px;
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+
+    background-color: black;
+
+    height: $add-btn-height;
+    width: $add-btn-height/2;
+  }
+
+  &:before {
+    left: -($add-btn-height/2);
+    border-radius: 200% 0 0 200%;
+  }
+
+  &:after {
+    right: -($add-btn-height/2);
+  }
+}

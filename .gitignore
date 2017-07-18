@@ -57,3 +57,6 @@ typings/
 .env
 
 .idea/
+/server/public/img/
+src/assets/img/
+!/server/public/img/default.jpg

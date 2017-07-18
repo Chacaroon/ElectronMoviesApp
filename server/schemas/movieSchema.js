@@ -13,6 +13,10 @@ const movieSchema = new Schema({
     date: {
         type: Date,
         default: Date.now()
+    },
+    img: {
+        type: String,
+        default: 'default.jpg'
     }
 })
 

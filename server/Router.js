@@ -11,8 +11,9 @@ app.post('/addMovie', (req, res) => {
         title: req.body.title,
         description: req.body.description,
         rating: +req.body.rating,
-        year: req.body.year,
-        genre: req.body.genre
+        year: +req.body.year,
+        genre: req.body.genre,
+        img: req.body.img
     })
 
     db.collection('movies').save(movie, (err) => {
@@ -24,7 +25,7 @@ app.post('/addMovie', (req, res) => {
 
 app.post('/findFilms', (req, res) => {
     let filmsList = []
-    Movies.find(req.filters, req.sort, (err, films) => {
+    Movies.find(req.body.filters, req.body.sort, (err, films) => {
         films.map((film) => {
             filmsList.push(film._doc)
         })

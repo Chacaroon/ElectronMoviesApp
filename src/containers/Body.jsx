@@ -19,13 +19,12 @@ export default class Body extends Component {
             />
         })
 
-        content.push(<AddMovieBtn
-            addMovie={this.props.addMovie}
-            key="addMovieBtn"
-        />)
-
         return <div id="body">
             {content}
+            <AddMovieBtn
+                addMovie={this.props.addMovie}
+                key="addMovieBtn"
+            />
         </div>
     }
 
