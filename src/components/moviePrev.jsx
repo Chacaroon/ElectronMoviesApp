@@ -24,13 +24,13 @@ export default class moviePrev extends Component { //parent Body
 
     render() {
 
-        const {title, description, rating, genre, year} = this.props.info
+        const {title, description, rating, genre, year, img} = this.props.info
 
         return <div className="prev" onClick={::this.showModal}>
 
             <div
                 className="img-prev"
-                style={{backgroundImage: `url(/img/${this.props.info.img}`}}/>
+                style={{backgroundImage: `url(/img/${img}`}}/>
             <p>Название: {title}</p>
             <p>Оценка: {rating}</p>
             <p>Год: {year}</p>
@@ -42,11 +42,11 @@ export default class moviePrev extends Component { //parent Body
                     <div className="prev-elem">
                         <div
                             className="img"
-                            style={{backgroundImage: `url(/img/${this.props.info.img}`}}/>
+                            style={{backgroundImage: `url(/img/${img}`}}/>
                         <div className="info">
                             <p>Название: {title}</p>
                             <p>Жанр: {genre}</p>
-                            <p>Год: {year}</p>
+                            {year ? `<p>Год: ${year}</p>` : ''}
                             <p>Оценка: {rating}</p>
                         </div>
                         <div className="description">
@@ -65,7 +65,7 @@ export default class moviePrev extends Component { //parent Body
             , description: PropTypes.string.isRequired
             , rating: PropTypes.number.isRequired
             , genre: PropTypes.string.isRequired
-            , year: PropTypes.number.isRequired
+            , year: PropTypes.number
             , date: PropTypes.string.isRequired
             , img: PropTypes.string.isRequired
         })

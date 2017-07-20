@@ -1,16 +1,35 @@
 #addMovieForm {
   display: block;
 
-  label {
-    width: 100%;
+  .info {
+    width: 50%;
 
-    input {
-      float: right;
-    }
+    vertical-align: top;
+    display: inline-block;
 
-    textarea {
-      width: 100%;
-      resize: none;
+    &>div {
+      input {
+        float: right;
+        width: 60%;
+      }
     }
   }
+
+  .img {
+    width: 40%;
+
+    margin: 0 10px 10px 0;
+
+    padding-top: 60%;
+    background: black no-repeat center top;
+    background-size: cover;
+    display: inline-block;
+  }
 }
+
+.description {
+   textarea {
+     width: 100%;
+     resize: none;
+   }
+ }

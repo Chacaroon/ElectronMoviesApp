@@ -23,7 +23,7 @@ export default class Body extends Component {
             {content}
             <AddMovieBtn
                 addMovie={this.props.addMovie}
-                key="addMovieBtn"
+                fetching={this.props.fetching}
             />
         </div>
     }
