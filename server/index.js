@@ -18,7 +18,7 @@ app.use(webpackHotMiddleware(compiler))
 app.use(morgan('dev'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(Router)
 mongoose.connect('mongodb://Chacaroon:Ukrnet299812@ds133340.mlab.com:33340/heroku_2s9jxmmk', {
     useMongoClient: true
@@ -31,7 +31,7 @@ db.on('error', (err) => {
 })
 
 db.once('open', () => {
-    console.log('DB connected!')
+    console.log('==> 🌎  DB connected!')
 
     app.listen(port, function (error) {
         if (error) {

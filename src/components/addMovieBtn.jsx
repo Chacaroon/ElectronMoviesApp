@@ -13,7 +13,7 @@ export default class addMovieBtn extends Component { //parent Body
     }
 
     // Inputs handler
-    inputsHandle(event) {
+    inputsHandler(event) {
         const {name, value} = event.target
 
         this.setState({
@@ -26,6 +26,7 @@ export default class addMovieBtn extends Component { //parent Body
     // Upload image handler
     imageHandler(event) {
         let reader = new FileReader()
+        let img = event.target.files[0]
 
         reader.onload = (event) => {
             ::this.setState({
@@ -34,7 +35,11 @@ export default class addMovieBtn extends Component { //parent Body
         }
 
         reader.readAsDataURL(event.target.files[0])
+        this.setState({
+            img: img
+        })
     }
+
     // End upload image handler
 
     // Modal handlers
@@ -60,13 +65,14 @@ export default class addMovieBtn extends Component { //parent Body
     // End modal handlers
 
     // Send data
-    submitForm(e) {
-        const {title, description, rating, genre, year, img} = this.state
-        this.props.addMovie(title, description, rating, genre, year, img)
+    submitForm(event) {
+        event.preventDefault()
+
+        this.props.addMovie(new FormData(event.target))
         this.setState({
             showModal: false
+            , image: '/img/default.jpg'
         })
-        e.preventDefault()
     }
 
     // End send data
@@ -83,34 +89,39 @@ export default class addMovieBtn extends Component { //parent Body
                         <strong>Добавить фильм</strong>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={::this.submitForm} id="addMovieForm">
+                        <form
+                            onSubmit={::this.submitForm}
+                            id="addMovieForm"
+                            encType="multipart/form-data">
 
                             {/*Don't edit!*/}
-                            <div className="img" style={{backgroundImage: `url(${this.state.image})`}} onClick={event => event.target.nextSibling.click()}/>
-                            <input type="file" style={{display: 'none'}} onChange={::this.imageHandler}/>
+                            <div
+                                className="img" style={{backgroundImage: `url(${this.state.image})`}}
+                                onClick={event => event.target.nextSibling.click()}/>
+                            <input name="img" type="file" style={{display: 'none'}} onChange={::this.imageHandler}/>
                             {/*Don't edit!*/}
 
                             <div className="info">
                                 <div>
                                     <b>Название: </b>
-                                    <input type="text" name="title" onChange={::this.inputsHandle} required/>
+                                    <input type="text" name="title" onChange={::this.inputsHandler} required/>
                                 </div>
                                 <br/>
                                 <div>
                                     <b>Оценка: </b>
                                     <input
-                                        type="number" name="rating" max="10" min="1" onChange={::this.inputsHandle}
+                                        type="number" name="rating" max="10" min="1" onChange={::this.inputsHandler}
                                         required/>
                                 </div>
                                 <br/>
                                 <div>
                                     <b>Жанр: </b>
-                                    <input type="text" name="genre" onChange={::this.inputsHandle} required/>
+                                    <input type="text" name="genre" onChange={::this.inputsHandler} required/>
                                 </div>
                                 <br/>
                                 <div>
                                     <b>Год: </b>
-                                    <input type="number" name="year" min="1970" onChange={::this.inputsHandle}/>
+                                    <input type="number" name="year" min="1895" onChange={::this.inputsHandler}/>
                                 </div>
                             </div>
 
@@ -118,7 +129,7 @@ export default class addMovieBtn extends Component { //parent Body
                                 <b>Описание:</b>
                                 <textarea
                                     type="text" name="description" rows="5"
-                                    onChange={::this.inputsHandle}/>
+                                    onChange={::this.inputsHandler}/>
                             </div>
 
                             <Button bsStyle="success" type="submit">

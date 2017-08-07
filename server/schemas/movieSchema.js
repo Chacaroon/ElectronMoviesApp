@@ -16,7 +16,7 @@ const movieSchema = new Schema({
     },
     img: {
         type: String,
-        default: 'default.jpg'
+        default: 'default.jpg',
     }
 })
 

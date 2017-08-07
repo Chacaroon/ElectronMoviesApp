@@ -46,7 +46,7 @@ export default class moviePrev extends Component { //parent Body
                         <div className="info">
                             <p>Название: {title}</p>
                             <p>Жанр: {genre}</p>
-                            {year ? `<p>Год: ${year}</p>` : ''}
+                            <p>Год: {year ? year : ''}</p>
                             <p>Оценка: {rating}</p>
                         </div>
                         <div className="description">
@@ -62,7 +62,7 @@ export default class moviePrev extends Component { //parent Body
     static propTypes = {
         info: PropTypes.shape({
             title: PropTypes.string.isRequired
-            , description: PropTypes.string.isRequired
+            , description: PropTypes.string
             , rating: PropTypes.number.isRequired
             , genre: PropTypes.string.isRequired
             , year: PropTypes.number

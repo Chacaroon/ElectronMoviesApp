@@ -4,13 +4,15 @@ const path    = require('path')
 module.exports = {
     entry: [
         'webpack-hot-middleware/client',
-        './src/index'
+        './src/index.js'
     ],
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '/static/'
     },
+
+    devtool: 'source-map',
 
     module: {
         rules: [

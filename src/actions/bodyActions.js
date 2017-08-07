@@ -9,7 +9,7 @@ import {
 } from '../constants/Body'
 import $ from 'jquery'
 
-export function addMovie(title, description, rating, genre, year, img) {
+export function addMovie(data) {
     return (dispatch) => {
 
         dispatch({
@@ -26,14 +26,9 @@ export function addMovie(title, description, rating, genre, year, img) {
 
         $.ajax('/addMovie', {
             method: 'POST',
-            data: {
-                title: title,
-                description: description,
-                rating: rating,
-                genre: genre,
-                year: year,
-                img: img
-            }
+            processData: false,
+            contentType: false,
+            data: data
         })
             .done((data) => {
                 data.isSuccess
