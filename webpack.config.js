@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const path    = require('path')
+const path = require('path')
 
 module.exports = {
     entry: [
@@ -11,6 +11,8 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/static/'
     },
+
+    context: path.resolve(__dirname),
 
     devtool: 'source-map',
 
@@ -31,7 +33,29 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            // {
+            //     test: /\.svg$/,
+            //     use: {
+            //         loader: 'file-loader',
+            //         options: {
+            //             name: '[name].[ext]',
+            //             outputPath: 'assets/img'
+            //         }
+            //     }
+            // },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        name: '[name].[ext]',
+                        outputPath: 'img/'
+                    }
+                }
             }
+
         ]
     },
 

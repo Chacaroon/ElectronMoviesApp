@@ -1,18 +1,23 @@
 import React, {Component} from 'react' //eslint-disable-line
-import {Modal} from 'react-bootstrap' //eslint-disable-line
+import {Modal, Button} from 'react-bootstrap' //eslint-disable-line
 import PropTypes from 'prop-types'
+
+import pencil from '../assets/img/pencil.svg'
+import defaultImg from '../assets/img/default.jpg'
 
 export default class moviePrev extends Component { //parent Body
 
-    componentWillMount() {
+    constructor(props) {
+        super(props)
+
         this.setState({
-            isShowModal: false,
+            isShowModal: false
         })
     }
 
     showModal() {
         this.setState({
-            isShowModal: true
+            isShowModal: true,
         })
     }
 
@@ -24,25 +29,31 @@ export default class moviePrev extends Component { //parent Body
 
     render() {
 
-        const {title, description, rating, genre, year, img} = this.props.info
+        let {title, description, rating, genre, year, img} = this.props.info
+
+        if (img === 'default') {
+            img = defaultImg
+        } else {
+            img = `/img/${img}`
+        }
 
         return <div className="prev" onClick={::this.showModal}>
 
             <div
                 className="img-prev"
-                style={{backgroundImage: `url(/img/${img}`}}/>
-            <p>Название: {title}</p>
-            <p>Оценка: {rating}</p>
-            <p>Год: {year}</p>
+                style={{backgroundImage: `url(${img})`}}/>
+            <p>{title}</p>
+            <p>{rating}</p>
             <Modal show={this.state.isShowModal} onHide={::this.closeModal}>
                 <Modal.Header>
                     <strong>{title}</strong>
+                    <img src={pencil} id="edit-btn"/>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="prev-elem">
+                    <div className="prev-body">
                         <div
                             className="img"
-                            style={{backgroundImage: `url(/img/${img}`}}/>
+                            style={{backgroundImage: `url(${img})`}}/>
                         <div className="info">
                             <p>Название: {title}</p>
                             <p>Жанр: {genre}</p>
@@ -55,6 +66,15 @@ export default class moviePrev extends Component { //parent Body
                         </div>
                     </div>
                 </Modal.Body>
+                <Modal.Footer>
+                    <Button bsStyle="success" type="submit" style={{float: 'left'}}>
+                        Отправить
+                    </Button>
+                    <Button
+                        bsStyle="danger" type="button" style={{float: 'right'}}>
+                        Закрыть
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
     }

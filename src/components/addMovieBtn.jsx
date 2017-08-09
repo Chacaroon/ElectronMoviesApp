@@ -2,13 +2,16 @@ import React, {Component} from 'react' //eslint-disable-line
 import {Modal, Button} from 'react-bootstrap' //eslint-disable-line
 import PropTypes from 'prop-types'
 
+import defaultImg from '../assets/img/default.jpg'
+
 export default class addMovieBtn extends Component { //parent Body
 
     constructor(props) {
         super(props)
 
         this.state = {
-            image: '/img/default.jpg'
+            image: defaultImg,
+            showModal: false
         }
     }
 
@@ -25,30 +28,26 @@ export default class addMovieBtn extends Component { //parent Body
 
     // Upload image handler
     imageHandler(event) {
-        let reader = new FileReader()
-        let img = event.target.files[0]
+        if (event.target.files[0]) {
+            let reader = new FileReader()
+            let img = event.target.files[0]
 
-        reader.onload = (event) => {
-            ::this.setState({
-                image: event.target.result
+            reader.onload = (event) => {
+                ::this.setState({
+                    image: event.target.result
+                })
+            }
+
+            reader.readAsDataURL(event.target.files[0])
+            this.setState({
+                img: img
             })
         }
-
-        reader.readAsDataURL(event.target.files[0])
-        this.setState({
-            img: img
-        })
     }
 
     // End upload image handler
 
     // Modal handlers
-    componentWillMount() {
-        this.setState({
-            showModal: false
-        })
-    }
-
     showAddModal() {
         this.setState({
             showModal: true
@@ -57,7 +56,7 @@ export default class addMovieBtn extends Component { //parent Body
 
     closeAddModal() {
         this.setState({
-            image: '/img/default.jpg',
+            image: defaultImg,
             showModal: false
         })
     }
@@ -71,7 +70,7 @@ export default class addMovieBtn extends Component { //parent Body
         this.props.addMovie(new FormData(event.target))
         this.setState({
             showModal: false
-            , image: '/img/default.jpg'
+            , image: defaultImg
         })
     }
 
@@ -131,18 +130,17 @@ export default class addMovieBtn extends Component { //parent Body
                                     type="text" name="description" rows="5"
                                     onChange={::this.inputsHandler}/>
                             </div>
-
-                            <Button bsStyle="success" type="submit">
-                                Отправить
-                            </Button>
-                            <Button
-                                bsStyle="danger" type="button"
-                                onClick={::this.closeAddModal}
-                                style={{float: 'right'}}>
-                                Закрыть
-                            </Button>
                         </form>
                     </Modal.Body>
+                    <Modal.Footer>
+                        <Button bsStyle="success" type="submit" style={{float: 'left'}} form="addMovieForm">
+                            Отправить
+                        </Button>
+                        <Button
+                            bsStyle="danger" type="button" onClick={::this.closeAddModal} style={{float: 'right'}}>
+                            Закрыть
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </Button>
         )

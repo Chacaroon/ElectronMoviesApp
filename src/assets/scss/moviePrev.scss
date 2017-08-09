@@ -25,7 +25,14 @@ $prev-bg-color: rgb(199, 199, 199);
   }
 }
 
-.prev-elem {
+#edit-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  float: right;
+}
+
+.prev-body {
   width: 100%;
   position: relative;
 
