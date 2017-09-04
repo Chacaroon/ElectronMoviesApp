@@ -14,24 +14,25 @@ export default class Body extends Component {
 
         const content = this.props.filmsList.map((item) => {
             return <MoviePrev
-                key={item._id}
-                info={{...item}}
+                key={item.id}
+                info={item}
+                handler={this.props.editMovie}
             />
         })
 
         return <div id="body">
             {content}
             <AddMovieBtn
-                addMovie={this.props.addMovie}
-                fetching={this.props.fetching}
+                handler={this.props.addMovie}
             />
         </div>
     }
 
     static propTypes = {
-        filmsList: PropTypes.array.isRequired,
-        addMovie: PropTypes.func.isRequired,
-        fetching: PropTypes.bool.isRequired,
-        findFilms: PropTypes.func.isRequired
+        filmsList: PropTypes.array.isRequired
+        , addMovie: PropTypes.func.isRequired
+        , editMovie: PropTypes.func.isRequired
+        , fetching: PropTypes.bool.isRequired
+        , findFilms: PropTypes.func.isRequired
     }
 }

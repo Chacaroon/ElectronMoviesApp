@@ -17,7 +17,8 @@ const movieSchema = new Schema({
     img: {
         type: String,
         default: 'default',
-    }
+    },
+    id: Number
 })
 
 module.exports = mongoose.connection.model('Movie', movieSchema)

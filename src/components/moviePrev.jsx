@@ -2,6 +2,8 @@ import React, {Component} from 'react' //eslint-disable-line
 import {Modal, Button} from 'react-bootstrap' //eslint-disable-line
 import PropTypes from 'prop-types'
 
+import AddAndEditForm from './addAndEditForm.jsx' //eslint-disable-line
+
 import pencil from '../assets/img/pencil.svg'
 import defaultImg from '../assets/img/default.jpg'
 
@@ -10,14 +12,26 @@ export default class moviePrev extends Component { //parent Body
     constructor(props) {
         super(props)
 
-        this.setState({
+        this.state = {
             isShowModal: false
-        })
+            , isEdit: false
+            , info: {...this.props.info}
+        }
+
+        if (this.props.info.img === 'default') {
+            this.state.info.img = defaultImg
+        } else {
+            this.state.info.img = `/img/${this.state.info.img}`
+        }
     }
+
+    /*
+     * Modal handlers
+     */
 
     showModal() {
         this.setState({
-            isShowModal: true,
+            isShowModal: true
         })
     }
 
@@ -27,15 +41,42 @@ export default class moviePrev extends Component { //parent Body
         })
     }
 
+    startEdit() {
+        this.setState({
+            isEdit: true
+        })
+    }
+
+    successEdit() {
+        this.setState({
+            isEdit: false
+            , isShowModal: false
+        })
+    }
+
+    cancelEdit() {
+        this.setState({
+            isEdit: false
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            info: {
+                ...nextProps.info
+                , img: nextProps.info.img === 'default' ? defaultImg : `/img/${nextProps.info.img}`
+            }
+        })
+    }
+
+    /*
+     * Render
+     */
+
     render() {
 
-        let {title, description, rating, genre, year, img} = this.props.info
-
-        if (img === 'default') {
-            img = defaultImg
-        } else {
-            img = `/img/${img}`
-        }
+        let {title, description, rating, genre, year, img} = this.state.info
+            , isEdit = this.state.isEdit
 
         return <div className="prev" onClick={::this.showModal}>
 
@@ -47,34 +88,44 @@ export default class moviePrev extends Component { //parent Body
             <Modal show={this.state.isShowModal} onHide={::this.closeModal}>
                 <Modal.Header>
                     <strong>{title}</strong>
-                    <img src={pencil} id="edit-btn"/>
+                    <img src={pencil} id="edit-btn" onClick={::this.startEdit}/>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="prev-body">
-                        <div
-                            className="img"
-                            style={{backgroundImage: `url(${img})`}}/>
-                        <div className="info">
-                            <p>Название: {title}</p>
-                            <p>Жанр: {genre}</p>
-                            <p>Год: {year ? year : ''}</p>
-                            <p>Оценка: {rating}</p>
+                    {isEdit
+                        ? <AddAndEditForm info={this.state.info} handler={this.props.handler}
+                            success={::this.successEdit}/>
+                        : <div className="prev-body">
+                            <div
+                                className="img"
+                                style={{backgroundImage: `url(${img})`}}
+                            />
+
+                            <div className="info">
+                                <p>Название: {title}</p>
+                                <p>Жанр: {genre}</p>
+                                <p>Год: {year}</p>
+                                <p>Оценка: {rating}</p>
+                            </div>
+
+                            <div className="description">
+                                <p>Описание:</p>
+                                <p>{description}</p>
+                            </div>
                         </div>
-                        <div className="description">
-                            <p>Описание:</p>
-                            <p>{description}</p>
-                        </div>
-                    </div>
+                    }
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button bsStyle="success" type="submit" style={{float: 'left'}}>
-                        Отправить
-                    </Button>
-                    <Button
-                        bsStyle="danger" type="button" style={{float: 'right'}}>
-                        Закрыть
-                    </Button>
-                </Modal.Footer>
+                {isEdit
+                    ? <Modal.Footer>
+                        <Button bsStyle="success" type="submit" style={{float: 'left'}} form="addAndEditForm">
+                            Изменить
+                        </Button>
+                        <Button
+                            bsStyle="danger" type="button" style={{float: 'right'}} onClick={::this.cancelEdit}>
+                            Отменить
+                        </Button>
+                    </Modal.Footer>
+                    : ''
+                }
             </Modal>
         </div>
     }
@@ -85,9 +136,10 @@ export default class moviePrev extends Component { //parent Body
             , description: PropTypes.string
             , rating: PropTypes.number.isRequired
             , genre: PropTypes.string.isRequired
-            , year: PropTypes.number
+            , year: PropTypes.number.isRequired
             , date: PropTypes.string.isRequired
             , img: PropTypes.string.isRequired
         })
+        , handler: PropTypes.func.isRequired
     }
 }

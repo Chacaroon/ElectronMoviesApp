@@ -6,6 +6,10 @@ import {
     , GET_MOVIE_REQUEST
     , GET_MOVIE_SUCCESS
     , GET_MOVIE_FAILED
+
+    , EDIT_MOVIE_REQUEST
+    , EDIT_MOVIE_SUCCESS
+    , EDIT_MOVIE_FAILED
 } from '../constants/Body'
 
 let initialState = {
@@ -21,30 +25,52 @@ export default function stateBody(state = initialState, action) {
         // Add film
 
         case ADD_MOVIE_REQUEST: {
-            return {...state, fetching: true}
+            return {...state, fetching: action.payload.fetching}
         }
         case ADD_MOVIE_SUCCESS: {
             const {filmsList} = state
-            filmsList.push(action.payload)
-            return {...state, filmsList: filmsList, fetching: false}
+            filmsList.push(action.payload.data)
+            return {...state, filmsList: filmsList, fetching: action.payload.fetching}
         }
 
         case ADD_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: false}
+            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
         }
 
         // Get film
 
         case GET_MOVIE_REQUEST: {
-            return {...state, fetching: true}
+            return {...state, fetching: action.payload.fetching}
         }
 
         case GET_MOVIE_SUCCESS: {
-            return {...state, filmsList: action.payload, fetching: false}
+            return {...state, filmsList: action.payload.data, fetching: action.payload.fetching}
         }
 
         case GET_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: false}
+            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+        }
+
+        // Edit film
+
+        case EDIT_MOVIE_REQUEST: {
+            return {...state, fetching: action.payload.fetching}
+        }
+
+        case EDIT_MOVIE_SUCCESS: {
+            let filmsList = state.filmsList
+            filmsList.find((element, index) => {
+                if (element.id == action.payload.film.id)
+                {
+                    filmsList[index] = action.payload.film
+                }
+            })
+
+            return {...state, filmsList: filmsList, fetching: action.payload.fetching}
+        }
+
+        case EDIT_MOVIE_FAILED: {
+            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
         }
 
         default:

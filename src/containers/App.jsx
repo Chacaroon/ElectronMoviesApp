@@ -11,13 +11,14 @@ import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
 class App extends Component {
     render() {
         const {filmsList, fetching, err} = this.props.body
-        const {addMovie, findFilms}  = this.props.bodyActions
+        const {addMovie, editMovie, findFilms}  = this.props.bodyActions
         return (
             <Grid>
                 <Row>
                     <Col xs={8} sm={8} md={8} lg={8}>
                         <Body
                             addMovie={addMovie}
+                            editMovie={editMovie}
                             findFilms={findFilms}
                             filmsList={filmsList}
                             fetching={fetching}
