@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(Router)
-mongoose.connect('mongodb://Chacaroon:Ukrnet299812@ds133340.mlab.com:33340/heroku_2s9jxmmk', {
+mongoose.connect(process.env.MONGODB_URI, {
     useMongoClient: true
 })
 
