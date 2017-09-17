@@ -10,6 +10,10 @@ import {
     , EDIT_MOVIE_REQUEST
     , EDIT_MOVIE_SUCCESS
     , EDIT_MOVIE_FAILED
+
+    , SORT_MOVIE_REQUEST
+    , SORT_MOVIE_SUCCESS
+    , SORT_MOVIE_FAILED
 } from '../constants/Body'
 
 let initialState = {
@@ -22,7 +26,9 @@ export default function stateBody(state = initialState, action) {
 
     switch (action.type) {
 
-        // Add film
+        /*
+         * Add film
+         */
 
         case ADD_MOVIE_REQUEST: {
             return {...state, fetching: action.payload.fetching}
@@ -37,7 +43,9 @@ export default function stateBody(state = initialState, action) {
             return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
         }
 
-        // Get film
+        /*
+         * Get film
+         */
 
         case GET_MOVIE_REQUEST: {
             return {...state, fetching: action.payload.fetching}
@@ -51,7 +59,9 @@ export default function stateBody(state = initialState, action) {
             return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
         }
 
-        // Edit film
+        /*
+         * Edit film
+         */
 
         case EDIT_MOVIE_REQUEST: {
             return {...state, fetching: action.payload.fetching}
@@ -70,6 +80,22 @@ export default function stateBody(state = initialState, action) {
         }
 
         case EDIT_MOVIE_FAILED: {
+            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+        }
+
+        /*
+         * Sort films
+         */
+
+        case SORT_MOVIE_REQUEST: {
+            return {...state, fetching: action.payload.fetching}
+        }
+
+        case SORT_MOVIE_SUCCESS: {
+            return {...state, filmsList: action.payload.filmsList, fetching: action.payload.fetching}
+        }
+
+        case SORT_MOVIE_FAILED: {
             return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
         }
 

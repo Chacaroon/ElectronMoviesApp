@@ -24,6 +24,8 @@ mongoose.connect('mongodb://Chacaroon:Ukrnet299812@ds133340.mlab.com:33340/herok
     useMongoClient: true
 })
 
+mongoose.Promise = require('bluebird')
+
 const db = mongoose.connection
 
 db.on('error', (err) => {

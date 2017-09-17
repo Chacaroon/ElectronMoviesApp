@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import MoviePrev from '../components/moviePrev.jsx' //eslint-disable-line
 import AddMovieBtn from '../components/addMovieBtn.jsx' //eslint-disable-line
+import {Grid, Row, Col} from 'react-bootstrap' //eslint-disable-line no-unused-vars
+import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
 
 export default class Body extends Component {
 
@@ -21,10 +23,22 @@ export default class Body extends Component {
         })
 
         return <div id="body">
-            {content}
-            <AddMovieBtn
-                handler={this.props.addMovie}
-            />
+            <Grid>
+                <Row>
+                    <Col xs={8} sm={8} md={8} lg={8}>
+                        <div id="header">
+                            <AddMovieBtn
+                                handler={this.props.addMovie}
+                            />
+                        </div>
+                        {content}
+                    </Col>
+
+                    <Col xs={4} sm={4} md={4} lg={4}>
+                        <Filter sortFilms={this.props.sortFilms}/>
+                    </Col>
+                </Row>
+            </Grid>
         </div>
     }
 
@@ -34,5 +48,6 @@ export default class Body extends Component {
         , editMovie: PropTypes.func.isRequired
         , fetching: PropTypes.bool.isRequired
         , findFilms: PropTypes.func.isRequired
+        , sortFilms: PropTypes.func.isRequired
     }
 }

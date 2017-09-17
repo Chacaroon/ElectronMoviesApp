@@ -13,7 +13,7 @@ app.post('/addMovie', (req, res) => {
 
     let movie = {
         id: getRandomInt()
-        , img: 'default'
+        , img: 'default.jpg'
     }
 
     let busboy = new Busboy({ headers: req.headers })
@@ -29,7 +29,11 @@ app.post('/addMovie', (req, res) => {
     })
 
     busboy.on('field', (fieldname, val) => {
-        movie[fieldname] = val
+        if (fieldname === 'img') {
+            movie[fieldname] = path.basename(val)
+        } else {
+            movie[fieldname] = val
+        }
     })
 
     busboy.on('finish', () => {
@@ -50,14 +54,14 @@ app.post('/editMovie/:id', (req, res) => {
 
     let movie = {
         id: id
-        , img: 'default'
+        , img: 'default.jpg'
     }
 
     let busboy = new Busboy({ headers: req.headers })
     busboy.on('file', (fieldname, file, filename) => {
         if (filename) {
             let fileName = id + '.jpg'
-            let saveTo = path.join(__dirname, '/public/img/', fileName)
+                , saveTo = path.join(__dirname, '/public/img/', fileName)
             file.pipe(fs.createWriteStream(saveTo))
             movie[fieldname] = fileName
         } else {
@@ -66,7 +70,11 @@ app.post('/editMovie/:id', (req, res) => {
     })
 
     busboy.on('field', (fieldname, val) => {
-        movie[fieldname] = val
+        if (fieldname === 'img') {
+            movie[fieldname] = path.basename(val)
+        } else {
+            movie[fieldname] = val
+        }
     })
 
     busboy.on('finish', () => {
@@ -79,9 +87,9 @@ app.post('/editMovie/:id', (req, res) => {
     req.pipe(busboy)
 })
 
-app.post('/findFilms', (req, res) => {
+app.get('/findFilms', (req, res) => {
     let filmsList = []
-    Movies.find(req.body.filters, req.body.sort, (err, films) => {
+    Movies.find({}, (err, films) => {
         films.map((film) => {
             filmsList.push(film._doc)
         })
@@ -90,6 +98,19 @@ app.post('/findFilms', (req, res) => {
             ? res.send({isSuccess: false, err: err})
             : res.send({isSuccess: true, filmsList: filmsList})
     })
+})
+
+app.post('/sortFilms', (req, res) => {
+    const {field, val} = req.body
+    Movies
+        .where(field).equals(val)
+        .sort('-date')
+        .then((filmsList) => {
+            res.send({isSuccess: true, filmsList: filmsList})
+        })
+        .catch((err) => {
+            res.send({isSuccess: false, err: err})
+        })
 })
 
 function getRandomInt() {

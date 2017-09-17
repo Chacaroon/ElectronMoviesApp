@@ -10,6 +10,10 @@ import {
     , EDIT_MOVIE_REQUEST
     , EDIT_MOVIE_SUCCESS
     , EDIT_MOVIE_FAILED
+
+    , SORT_MOVIE_REQUEST
+    , SORT_MOVIE_SUCCESS
+    , SORT_MOVIE_FAILED
 } from '../constants/Body'
 import $ from 'jquery'
 
@@ -97,7 +101,7 @@ export function editMovie(data, id) {
     }
 }
 
-export function findFilms(request) {
+export function findFilms() {
 
     return (dispatch) => {
         dispatch({
@@ -117,8 +121,7 @@ export function findFilms(request) {
         }
 
         $.ajax('/findFilms', {
-            type: 'POST',
-            data: request
+            type: 'GET'
         })
             .done((data) => {
 
@@ -127,6 +130,43 @@ export function findFilms(request) {
                         type: GET_MOVIE_SUCCESS,
                         payload: {
                             data: data.filmsList
+                            , fetching: false
+                        }
+                    })
+                    : fail()
+            })
+            .fail(fail)
+    }
+}
+
+export function sortFilms(request) {
+    return (dispatch) => {
+        dispatch({
+            type: SORT_MOVIE_REQUEST
+            , payload: {fetching: true}
+        })
+
+        const fail = () => {
+            dispatch({
+                type: SORT_MOVIE_FAILED,
+                err: true,
+                payload: {
+                    err: new Error('Не удалось загрузить список фильмов :\'(')
+                    , fetching: false
+                }
+            })
+        }
+
+        $.ajax('/sortFilms', {
+            method: 'POST',
+            data: request
+        })
+            .done((data) => {
+                data.isSuccess
+                    ? dispatch({
+                        type: SORT_MOVIE_SUCCESS,
+                        payload: {
+                            filmsList: data.filmsList
                             , fetching: false
                         }
                     })

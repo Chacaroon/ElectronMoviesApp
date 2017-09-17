@@ -4,32 +4,21 @@ import {bindActionCreators} from 'redux'
 import PropTypes from 'prop-types'
 import * as bodyActions from '../actions/bodyActions'
 
-import {Grid, Row, Col} from 'react-bootstrap' //eslint-disable-line no-unused-vars
 import Body from './Body.jsx' //eslint-disable-line no-unused-vars
-import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
 
 class App extends Component {
     render() {
         const {filmsList, fetching, err} = this.props.body
-        const {addMovie, editMovie, findFilms}  = this.props.bodyActions
+        const {addMovie, editMovie, findFilms, sortFilms} = this.props.bodyActions
         return (
-            <Grid>
-                <Row>
-                    <Col xs={8} sm={8} md={8} lg={8}>
-                        <Body
-                            addMovie={addMovie}
-                            editMovie={editMovie}
-                            findFilms={findFilms}
-                            filmsList={filmsList}
-                            fetching={fetching}
-                            err={err}/>
-                    </Col>
-
-                    <Col xs={4} sm={4} md={4} lg={4}>
-                        <Filter/>
-                    </Col>
-                </Row>
-            </Grid>
+            <Body
+                addMovie={addMovie}
+                editMovie={editMovie}
+                findFilms={findFilms}
+                sortFilms={sortFilms}
+                filmsList={filmsList}
+                fetching={fetching}
+                err={err}/>
         )
     }
 }

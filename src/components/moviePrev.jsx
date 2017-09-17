@@ -18,7 +18,7 @@ export default class moviePrev extends Component { //parent Body
             , info: {...this.props.info}
         }
 
-        if (this.props.info.img === 'default') {
+        if (this.props.info.img === 'default.jpg') {
             this.state.info.img = defaultImg
         } else {
             this.state.info.img = `/img/${this.state.info.img}`
@@ -64,7 +64,7 @@ export default class moviePrev extends Component { //parent Body
         this.setState({
             info: {
                 ...nextProps.info
-                , img: nextProps.info.img === 'default' ? defaultImg : `/img/${nextProps.info.img}`
+                , img: nextProps.info.img === 'default.jpg' ? defaultImg : `/img/${nextProps.info.img}`
             }
         })
     }

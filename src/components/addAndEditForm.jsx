@@ -8,15 +8,16 @@ export default class AddAndEditForm extends Component {
     constructor(props) {
         super(props)
 
-        if (this.props.info) {
-            this.state = {
-                ...this.props.info
-                , image: this.props.info.img
+        if (props.info) {
+            this.state = { // сработает, если выполняется изменение фильма
+                ...props.info
+                , image: props.info.img
             }
         } else {
-            this.state = {
-                id: 0
+            this.state = { // сработает, если добавлятся новый фильм
+                id: 0 // заглушка. Новый id выдаст сервер
                 , image: defaultImg
+                , img: defaultImg
             }
         }
     }
@@ -48,7 +49,13 @@ export default class AddAndEditForm extends Component {
     submitForm(event) {
         event.preventDefault()
 
-        this.props.handler(new FormData(event.target), this.state.id)
+        const data = new FormData(event.target)
+        if (!data.get('img').name) { // если у файла в поле img нет имени, значит файла нет
+            data.set('img', this.state.img) // заменить значение в поле img на имя файла, полученное при монтировании
+        }
+        // data.append('img', this.props.info.img)
+
+        this.props.handler(data, this.state.id)
         this.props.success()
         this.setState({
             image: defaultImg
