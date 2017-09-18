@@ -14,11 +14,13 @@ export default class Body extends Component {
 
     render() {
 
-        const content = this.props.filmsList.map((item) => {
+        const {editMovie, filters, sortFilms, addMovie, filmsList} = this.props
+
+        const content = filmsList.map((item) => {
             return <MoviePrev
                 key={item.id}
                 info={item}
-                handler={this.props.editMovie}
+                handler={editMovie}
             />
         })
 
@@ -28,14 +30,17 @@ export default class Body extends Component {
                     <Col xs={8} sm={8} md={8} lg={8}>
                         <div id="header">
                             <AddMovieBtn
-                                handler={this.props.addMovie}
+                                handler={addMovie}
                             />
                         </div>
                         {content}
                     </Col>
 
                     <Col xs={4} sm={4} md={4} lg={4}>
-                        <Filter sortFilms={this.props.sortFilms}/>
+                        <Filter
+                            sortFilms={sortFilms}
+                            filters={filters}
+                        />
                     </Col>
                 </Row>
             </Grid>
@@ -49,5 +54,9 @@ export default class Body extends Component {
         , fetching: PropTypes.bool.isRequired
         , findFilms: PropTypes.func.isRequired
         , sortFilms: PropTypes.func.isRequired
+        , filters: PropTypes.shape({
+            year: PropTypes.array
+            , genre: PropTypes.array
+        })
     }
 }

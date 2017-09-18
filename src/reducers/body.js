@@ -17,9 +17,14 @@ import {
 } from '../constants/Body'
 
 let initialState = {
-    filmsList: [],
-    fetching: false,
-    err: false
+    filmsList: []
+    , filters: {
+        year: []
+        , genre: []
+    }
+    , fetching: false
+    , err: false
+    , errMsg: ''
 }
 
 export default function stateBody(state = initialState, action) {
@@ -31,16 +36,27 @@ export default function stateBody(state = initialState, action) {
          */
 
         case ADD_MOVIE_REQUEST: {
-            return {...state, fetching: action.payload.fetching}
+            return {
+                ...state
+                , fetching: true
+            }
         }
         case ADD_MOVIE_SUCCESS: {
             const {filmsList} = state
             filmsList.push(action.payload.data)
-            return {...state, filmsList: filmsList, fetching: action.payload.fetching}
+            return {
+                ...state
+                , filmsList: filmsList
+                , fetching: false
+            }
         }
 
         case ADD_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+            return {
+                ...state
+                , err: action.payload.err.message
+                , fetching: false
+            }
         }
 
         /*
@@ -48,15 +64,27 @@ export default function stateBody(state = initialState, action) {
          */
 
         case GET_MOVIE_REQUEST: {
-            return {...state, fetching: action.payload.fetching}
+            return {
+                ...state
+                , fetching: true
+            }
         }
 
         case GET_MOVIE_SUCCESS: {
-            return {...state, filmsList: action.payload.data, fetching: action.payload.fetching}
+            return {
+                ...state
+                , filmsList: action.payload.filmsList
+                , filters: action.payload.filters
+                , fetching: false
+            }
         }
 
         case GET_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+            return {
+                ...state
+                , err: action.payload.err.message
+                , fetching: false
+            }
         }
 
         /*
@@ -64,7 +92,10 @@ export default function stateBody(state = initialState, action) {
          */
 
         case EDIT_MOVIE_REQUEST: {
-            return {...state, fetching: action.payload.fetching}
+            return {
+                ...state
+                , fetching: true
+            }
         }
 
         case EDIT_MOVIE_SUCCESS: {
@@ -76,11 +107,18 @@ export default function stateBody(state = initialState, action) {
                 }
             })
 
-            return {...state, filmsList: filmsList, fetching: action.payload.fetching}
+            return {
+                ...state, filmsList: filmsList
+                , fetching: false
+            }
         }
 
         case EDIT_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+            return {
+                ...state
+                , err: action.payload.err.message
+                , fetching: false
+            }
         }
 
         /*
@@ -88,15 +126,26 @@ export default function stateBody(state = initialState, action) {
          */
 
         case SORT_MOVIE_REQUEST: {
-            return {...state, fetching: action.payload.fetching}
+            return {
+                ...state
+                , fetching: true
+            }
         }
 
         case SORT_MOVIE_SUCCESS: {
-            return {...state, filmsList: action.payload.filmsList, fetching: action.payload.fetching}
+            return {
+                ...state
+                , filmsList: action.payload.filmsList
+                , fetching: false
+            }
         }
 
         case SORT_MOVIE_FAILED: {
-            return {...state, err: action.payload.err.message, fetching: action.payload.fetching}
+            return {
+                ...state
+                , err: action.payload.err.message
+                , fetching: false
+            }
         }
 
         default:

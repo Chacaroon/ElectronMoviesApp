@@ -24,7 +24,7 @@ export default class AddAndEditForm extends Component {
 
     // Upload image handler
     imageHandler(event) {
-        if (event.target.files[0]) {
+        if (event.target.files[0]) { // проверка на наличие загружаемого файла
             let reader = new FileReader()
 
             reader.onload = (event) => {
@@ -53,10 +53,11 @@ export default class AddAndEditForm extends Component {
         if (!data.get('img').name) { // если у файла в поле img нет имени, значит файла нет
             data.set('img', this.state.img) // заменить значение в поле img на имя файла, полученное при монтировании
         }
-        // data.append('img', this.props.info.img)
 
+        // обработчик для добавления/редактирования фильма
+        // первым аргументом передаётся форма с данными, вторым - id редактируемого фильма
         this.props.handler(data, this.state.id)
-        this.props.success()
+        this.props.success() // закрыть модальное окно
         this.setState({
             image: defaultImg
         })
@@ -66,7 +67,7 @@ export default class AddAndEditForm extends Component {
 
     render () {
 
-        return <form encType="multipart/form-data" id="addAndEditForm" onSubmit={::this.submitForm}>
+        return <form id="addAndEditForm" onSubmit={::this.submitForm}>
 
             {/*Don't edit!*/}
             <div className="img" style={{backgroundImage: `url(${this.state.image})`}}
@@ -110,6 +111,6 @@ export default class AddAndEditForm extends Component {
 
     static PropTypes = {
         handler: PropTypes.func.isRequired
-        , closeModal: PropTypes.func.isRequired
+        , success: PropTypes.func.isRequired
     }
 }

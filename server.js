@@ -16,11 +16,11 @@ const compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}))
 app.use(webpackHotMiddleware(compiler))
 app.use(morgan('dev'))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'server', 'public')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(Router)
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@ds133340.mlab.com:33340/heroku_2s9jxmmk`, {
     useMongoClient: true
 })
 

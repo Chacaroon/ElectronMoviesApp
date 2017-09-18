@@ -14,6 +14,10 @@ import {
     , SORT_MOVIE_REQUEST
     , SORT_MOVIE_SUCCESS
     , SORT_MOVIE_FAILED
+
+    , GET_FILTERS_REQUEST
+    , GET_FILTERS_SUCCESS
+    , GET_FILTERS_FAILED
 } from '../constants/Body'
 import $ from 'jquery'
 
@@ -22,9 +26,6 @@ export function addMovie(data) {
 
         dispatch({
             type: ADD_MOVIE_REQUEST
-            , payload: {
-                fetching: true
-            }
         })
 
         const fail = () => {
@@ -32,8 +33,7 @@ export function addMovie(data) {
                 type: ADD_MOVIE_FAILED,
                 err: true,
                 payload: {
-                    err: new Error('Не удалось загрузить фильм :\'(')
-                    , fetching: false
+                    errMsg: 'Не удалось загрузить фильм :\'('
                 }
             })
         }
@@ -50,7 +50,6 @@ export function addMovie(data) {
                         type: ADD_MOVIE_SUCCESS,
                         payload: {
                             data: data.film
-                            , fetching: false
                         }
                     })
                     : fail()
@@ -64,9 +63,6 @@ export function editMovie(data, id) {
     return (dispatch) => {
         dispatch({
             type: EDIT_MOVIE_REQUEST
-            , payload: {
-                fetching: true
-            }
         })
 
         const fail = () => {
@@ -74,8 +70,7 @@ export function editMovie(data, id) {
                 type: EDIT_MOVIE_FAILED,
                 err: true,
                 payload: {
-                    err: new Error('Не удалось отредактировать фильм :\'(')
-                    , fetching: false
+                    errMsg: 'Не удалось отредактировать фильм :\'('
                 }
             })
         }
@@ -92,7 +87,6 @@ export function editMovie(data, id) {
                         type: EDIT_MOVIE_SUCCESS,
                         payload: {
                             film: data.film
-                            , fetching: false
                         }
                     })
                     : fail()
@@ -106,7 +100,6 @@ export function findFilms() {
     return (dispatch) => {
         dispatch({
             type: GET_MOVIE_REQUEST
-            , payload: {fetching: true}
         })
 
         const fail = () => {
@@ -114,8 +107,7 @@ export function findFilms() {
                 type: GET_MOVIE_FAILED,
                 err: true,
                 payload: {
-                    err: new Error('Не удалось загрузить список фильмов :\'(')
-                    , fetching: false
+                    errMsg: 'Не удалось загрузить список фильмов :\'('
                 }
             })
         }
@@ -129,8 +121,8 @@ export function findFilms() {
                     ? dispatch({
                         type: GET_MOVIE_SUCCESS,
                         payload: {
-                            data: data.filmsList
-                            , fetching: false
+                            filmsList: data.filmsList
+                            , filters: data.filters
                         }
                     })
                     : fail()
@@ -143,7 +135,6 @@ export function sortFilms(request) {
     return (dispatch) => {
         dispatch({
             type: SORT_MOVIE_REQUEST
-            , payload: {fetching: true}
         })
 
         const fail = () => {
@@ -151,8 +142,7 @@ export function sortFilms(request) {
                 type: SORT_MOVIE_FAILED,
                 err: true,
                 payload: {
-                    err: new Error('Не удалось загрузить список фильмов :\'(')
-                    , fetching: false
+                    errMsg: 'Не удалось загрузить список фильмов :\'('
                 }
             })
         }
@@ -167,7 +157,37 @@ export function sortFilms(request) {
                         type: SORT_MOVIE_SUCCESS,
                         payload: {
                             filmsList: data.filmsList
-                            , fetching: false
+                        }
+                    })
+                    : fail()
+            })
+            .fail(fail)
+    }
+}
+
+export function getFilters() {
+    return (dispatch) => {
+        dispatch({
+            type: GET_FILTERS_REQUEST
+        })
+
+        const fail = () => {
+            dispatch({
+                type: GET_FILTERS_FAILED,
+                err: true,
+                payload: {
+                    errMsg: 'Не удалось обновиьт список фильтров :\'('
+                }
+            })
+        }
+
+        $.ajax('/getFilters')
+            .done((data) => {
+                data.isSuccess
+                    ? dispatch({
+                        type: GET_FILTERS_SUCCESS,
+                        payload: {
+                            filters: data.filters
                         }
                     })
                     : fail()

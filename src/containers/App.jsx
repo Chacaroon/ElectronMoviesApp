@@ -8,7 +8,7 @@ import Body from './Body.jsx' //eslint-disable-line no-unused-vars
 
 class App extends Component {
     render() {
-        const {filmsList, fetching, err} = this.props.body
+        const {filmsList, fetching, err, filters} = this.props.body
         const {addMovie, editMovie, findFilms, sortFilms} = this.props.bodyActions
         return (
             <Body
@@ -17,8 +17,10 @@ class App extends Component {
                 findFilms={findFilms}
                 sortFilms={sortFilms}
                 filmsList={filmsList}
+                filters={filters}
                 fetching={fetching}
-                err={err}/>
+                err={err}
+            />
         )
     }
 }
@@ -26,6 +28,7 @@ class App extends Component {
 App.propTypes = {
     body: PropTypes.shape({
         filmsList: PropTypes.array.isRequired
+        , filters: PropTypes.object.isRequired
         , fetching: PropTypes.bool.isRequired
         , err: PropTypes.bool.isRequired
     })

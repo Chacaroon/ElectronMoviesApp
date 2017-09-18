@@ -1,5 +1,5 @@
-const app   = require('express').Router()
-const db    = require('mongoose').connection
+const app = require('express').Router()
+const db = require('mongoose').connection
 const Movies = require('./schemas/movieSchema')
 const Busboy = require('busboy')
 const fs = require('fs')
@@ -16,7 +16,7 @@ app.post('/addMovie', (req, res) => {
         , img: 'default.jpg'
     }
 
-    let busboy = new Busboy({ headers: req.headers })
+    let busboy = new Busboy({headers: req.headers})
     busboy.on('file', (fieldname, file, filename) => {
         if (filename) {
             let fName = movie.id + path.extname(filename)
@@ -57,10 +57,10 @@ app.post('/editMovie/:id', (req, res) => {
         , img: 'default.jpg'
     }
 
-    let busboy = new Busboy({ headers: req.headers })
+    let busboy = new Busboy({headers: req.headers})
     busboy.on('file', (fieldname, file, filename) => {
         if (filename) {
-            let fileName = id + '.jpg'
+            let fileName = getRandomInt() + '.jpg'
                 , saveTo = path.join(__dirname, '/public/img/', fileName)
             file.pipe(fs.createWriteStream(saveTo))
             movie[fieldname] = fileName
@@ -78,26 +78,29 @@ app.post('/editMovie/:id', (req, res) => {
     })
 
     busboy.on('finish', () => {
-        Movies.findOneAndUpdate({id: movie.id}, movie, (err) => {
-            err
-                ? res.send({isSuccess: false, err: err})
-                : res.send({isSuccess: true, film: movie})
-        })
+        Movies
+            .findOneAndUpdate({id: movie.id}, movie)
+            .then(() => {
+                res.send({isSuccess: true, film: movie})
+            })
+            .catch((err) => {
+                res.send({isSuccess: false, err: err})
+            })
     })
     req.pipe(busboy)
 })
 
 app.get('/findFilms', (req, res) => {
-    let filmsList = []
-    Movies.find({}, (err, films) => {
-        films.map((film) => {
-            filmsList.push(film._doc)
-        })
+    Movies
+        .find()
+        .then((filmsList) => {
+            const filters = mappingFilters(filmsList)
 
-        err
-            ? res.send({isSuccess: false, err: err})
-            : res.send({isSuccess: true, filmsList: filmsList})
-    })
+            res.send({isSuccess: true, filmsList: filmsList, filters: filters})
+        })
+        .catch((err) => {
+            res.send({isSuccess: false, err: err})
+        })
 })
 
 app.post('/sortFilms', (req, res) => {
@@ -112,6 +115,40 @@ app.post('/sortFilms', (req, res) => {
             res.send({isSuccess: false, err: err})
         })
 })
+
+app.get('/getFilters', (req, res) => {
+    Movies
+        .find()
+        .select('year genre')
+        .then((filtersList) => {
+            const filters = mappingFilters(filtersList)
+
+            res.send({isSuccess: true, filters: filters})
+        })
+        .catch((err) => {
+            res.send({isSuccess: false, err: err})
+        })
+
+})
+
+function mappingFilters(filtersArray) {
+    const filters = {
+        year: []
+        , genre: []
+    }
+
+    filtersArray.map((filter) => {
+        if (filters.year.indexOf(filter.year) === -1) {
+            filters.year.push(filter.year)
+        }
+
+        if (filters.genre.indexOf(filter.genre) === -1) {
+            filters.genre.push(filter.genre)
+        }
+    })
+
+    return filters
+}
 
 function getRandomInt() {
     return Math.floor(Math.random() * 100000)
