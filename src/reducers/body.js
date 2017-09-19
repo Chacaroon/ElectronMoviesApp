@@ -14,6 +14,9 @@ import {
     , SORT_MOVIE_REQUEST
     , SORT_MOVIE_SUCCESS
     , SORT_MOVIE_FAILED
+
+    , GET_FILTERS_SUCCESS
+    , GET_FILTERS_FAILED
 } from '../constants/Body'
 
 let initialState = {
@@ -145,6 +148,24 @@ export default function stateBody(state = initialState, action) {
                 ...state
                 , err: action.payload.err.message
                 , fetching: false
+            }
+        }
+
+        /*
+         * Get filters list
+         */
+
+        case GET_FILTERS_SUCCESS: {
+            return {
+                ...state
+                , filters: action.payload.filters
+            }
+        }
+
+        case GET_FILTERS_FAILED: {
+            return {
+                ...state
+                , errMsg: action.payload.err.message
             }
         }
 

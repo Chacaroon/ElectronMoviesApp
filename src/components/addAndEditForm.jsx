@@ -58,6 +58,7 @@ export default class AddAndEditForm extends Component {
         // первым аргументом передаётся форма с данными, вторым - id редактируемого фильма
         this.props.handler(data, this.state.id)
         this.props.success() // закрыть модальное окно
+        this.props.getFilters() // обновить список фильтров
         this.setState({
             image: defaultImg
         })

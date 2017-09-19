@@ -69,10 +69,6 @@ export default class moviePrev extends Component { //parent Body
         })
     }
 
-    /*
-     * Render
-     */
-
     render() {
 
         let {title, description, rating, genre, year, img} = this.state.info
@@ -93,6 +89,7 @@ export default class moviePrev extends Component { //parent Body
                 <Modal.Body>
                     {isEdit
                         ? <AddAndEditForm info={this.state.info} handler={this.props.handler}
+                            getFilters={this.props.getFilters}
                             success={::this.successEdit}/>
                         : <div className="prev-body">
                             <div

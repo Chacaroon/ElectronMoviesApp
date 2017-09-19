@@ -3,7 +3,6 @@ import {
     , ADD_MOVIE_REQUEST
     , ADD_MOVIE_SUCCESS
 
-    , GET_MOVIE_REQUEST
     , GET_MOVIE_SUCCESS
     , GET_MOVIE_FAILED
 
@@ -15,7 +14,6 @@ import {
     , SORT_MOVIE_SUCCESS
     , SORT_MOVIE_FAILED
 
-    , GET_FILTERS_REQUEST
     , GET_FILTERS_SUCCESS
     , GET_FILTERS_FAILED
 } from '../constants/Body'
@@ -31,7 +29,6 @@ export function addMovie(data) {
         const fail = () => {
             dispatch({
                 type: ADD_MOVIE_FAILED,
-                err: true,
                 payload: {
                     errMsg: 'Не удалось загрузить фильм :\'('
                 }
@@ -68,7 +65,6 @@ export function editMovie(data, id) {
         const fail = () => {
             dispatch({
                 type: EDIT_MOVIE_FAILED,
-                err: true,
                 payload: {
                     errMsg: 'Не удалось отредактировать фильм :\'('
                 }
@@ -98,14 +94,9 @@ export function editMovie(data, id) {
 export function findFilms() {
 
     return (dispatch) => {
-        dispatch({
-            type: GET_MOVIE_REQUEST
-        })
-
         const fail = () => {
             dispatch({
                 type: GET_MOVIE_FAILED,
-                err: true,
                 payload: {
                     errMsg: 'Не удалось загрузить список фильмов :\'('
                 }
@@ -140,7 +131,6 @@ export function sortFilms(request) {
         const fail = () => {
             dispatch({
                 type: SORT_MOVIE_FAILED,
-                err: true,
                 payload: {
                     errMsg: 'Не удалось загрузить список фильмов :\'('
                 }
@@ -167,14 +157,10 @@ export function sortFilms(request) {
 
 export function getFilters() {
     return (dispatch) => {
-        dispatch({
-            type: GET_FILTERS_REQUEST
-        })
 
         const fail = () => {
             dispatch({
                 type: GET_FILTERS_FAILED,
-                err: true,
                 payload: {
                     errMsg: 'Не удалось обновиьт список фильтров :\'('
                 }

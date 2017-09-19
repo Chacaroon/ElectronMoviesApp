@@ -45,7 +45,7 @@ export default class addMovieBtn extends Component { //parent Body
                         <strong>Добавить фильм</strong>
                     </Modal.Header>
                     <Modal.Body>
-                        <AddAndEditForm handler={this.props.handler} success={::this.closeModal}/>
+                        <AddAndEditForm getFilters={this.props.getFilters} handler={this.props.handler} success={::this.closeModal}/>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button bsStyle="success" type="submit" style={{float: 'left'}} form="addAndEditForm">

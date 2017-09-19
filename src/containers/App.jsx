@@ -9,13 +9,14 @@ import Body from './Body.jsx' //eslint-disable-line no-unused-vars
 class App extends Component {
     render() {
         const {filmsList, fetching, err, filters} = this.props.body
-        const {addMovie, editMovie, findFilms, sortFilms} = this.props.bodyActions
+        const {addMovie, editMovie, findFilms, sortFilms, getFilters} = this.props.bodyActions
         return (
             <Body
                 addMovie={addMovie}
                 editMovie={editMovie}
                 findFilms={findFilms}
                 sortFilms={sortFilms}
+                getFilters={getFilters}
                 filmsList={filmsList}
                 filters={filters}
                 fetching={fetching}
