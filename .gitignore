@@ -57,4 +57,4 @@ typings/
 .env
 
 .idea/
-/server/public/img/
+/server/public/img/*.jpg
