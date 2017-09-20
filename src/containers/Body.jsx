@@ -5,6 +5,7 @@ import MoviePrev from '../components/moviePrev.jsx' //eslint-disable-line
 import AddMovieBtn from '../components/addMovieBtn.jsx' //eslint-disable-line
 import {Grid, Row, Col} from 'react-bootstrap' //eslint-disable-line no-unused-vars
 import Filter from './Filter.jsx' //eslint-disable-line no-unused-vars
+import FetchingModal from '../components/fetchingModal.jsx' //eslint-disable-line
 
 export default class Body extends Component {
 
@@ -14,7 +15,7 @@ export default class Body extends Component {
 
     render() {
 
-        const {editMovie, filters, sortFilms, addMovie, filmsList, getFilters} = this.props
+        const {editMovie, filters, sortFilms, addMovie, filmsList, getFilters, fetching} = this.props
 
         const content = filmsList.map((item) => {
             return <MoviePrev
@@ -46,6 +47,9 @@ export default class Body extends Component {
                     </Col>
                 </Row>
             </Grid>
+            <FetchingModal
+                fetching={fetching}
+            />
         </div>
     }
 
